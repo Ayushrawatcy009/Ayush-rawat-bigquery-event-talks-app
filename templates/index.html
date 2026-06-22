@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BigQuery Release Notes</title>
+  <meta name="description" content="Browse the latest BigQuery release notes and share them on Twitter/X." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- Background blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <div class="app-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" fill="url(#grad1)"/>
+            <path d="M2 17l10 5 10-5" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M2 12l10 5 10-5" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="grad1" x1="2" y1="7" x2="22" y2="7" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4285f4"/>
+                <stop offset="100%" stop-color="#34a853"/>
+              </linearGradient>
+              <linearGradient id="grad2" x1="2" y1="17" x2="22" y2="17" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#fbbc05"/>
+                <stop offset="100%" stop-color="#ea4335"/>
+              </linearGradient>
+              <linearGradient id="grad3" x1="2" y1="12" x2="22" y2="12" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4285f4"/>
+                <stop offset="100%" stop-color="#a142f4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div>
+            <h1 class="logo-title">BigQuery Release Notes</h1>
+            <p class="logo-sub">Stay current with the latest updates</p>
+          </div>
+        </div>
+        <button id="refreshBtn" class="refresh-btn" aria-label="Refresh release notes">
+          <svg id="refreshIcon" class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <svg id="spinnerIcon" class="btn-icon spinner hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="6"></line>
+            <line x1="12" y1="18" x2="12" y2="22"></line>
+            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+            <line x1="2" y1="12" x2="6" y2="12"></line>
+            <line x1="18" y1="12" x2="22" y2="12"></line>
+            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+          </svg>
+          <span id="refreshLabel">Refresh</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Status bar -->
+    <div class="status-bar" id="statusBar">
+      <span id="statusText">Loading release notes…</span>
+      <span id="countBadge" class="count-badge hidden"></span>
+    </div>
+
+    <!-- Error banner -->
+    <div id="errorBanner" class="error-banner hidden">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="errorMsg"></span>
+    </div>
+
+    <!-- Feed -->
+    <main class="feed" id="feed" aria-live="polite"></main>
+  </div>
+
+  <!-- Tweet Modal -->
+  <div id="tweetModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <svg class="x-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <h2 id="modalTitle" class="modal-title">Share on X (Twitter)</h2>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-label">Compose your tweet</p>
+        <textarea id="tweetText" class="tweet-textarea" rows="5" maxlength="280" spellcheck="true"></textarea>
+        <div class="char-row">
+          <span id="charCount" class="char-count">0 / 280</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" id="modalCancel">Cancel</button>
+        <a id="tweetLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-tweet">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="tweet-btn-icon"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Post Tweet
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

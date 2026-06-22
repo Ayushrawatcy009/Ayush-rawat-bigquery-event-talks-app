@@ -1,0 +1,47 @@
+# ── Virtual environment ────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Python cache & compiled files ─────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# ── Distribution / packaging ───────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+
+# ── Flask / Werkzeug ───────────────────────────────────────────
+instance/
+.webassets-cache
+
+# ── Environment variables ──────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── OS generated files ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE / editor ───────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Logs ───────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Testing ────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
